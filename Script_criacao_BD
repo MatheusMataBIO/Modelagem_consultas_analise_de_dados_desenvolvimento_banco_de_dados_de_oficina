@@ -1,0 +1,84 @@
+CREATE DATABASE IF NOT EXISTS MM_oficina_mecânica;
+
+USE MM_oficina_mecânica;
+
+CREATE TABLE clientes (
+	idClientes INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(45),
+    Nome_meio VARCHAR(45),
+    Último_nome VARCHAR(45),
+    Endereço VARCHAR(45),
+    Contato CHAR(11)
+);
+
+CREATE TABLE veículos (
+	idVeículos INT AUTO_INCREMENT PRIMARY KEY,
+    Clientes_idClientes INT,
+	Placa CHAR(7),
+    Modelo VARCHAR(45),
+    Ano DATE NOT NULL,
+    CONSTRAINT fk_cliente_veículo FOREIGN KEY (Clientes_idClientes) REFERENCES clientes(idClientes),
+    CONSTRAINT unica_placa UNIQUE (Placa)
+);
+
+CREATE TABLE ordem_de_serviço_OS (
+	idOrdem_de_Serviço_OS_ INT AUTO_INCREMENT PRIMARY KEY,
+    Veículos_idVeículos INT,
+    Veículos_idClientes INT,
+    Data_emissão DATE NOT NULL, 
+    Valor_total FLOAT,
+    Status_serviço ENUM('Em andamento', 'Serviço concluído', 'Em processamento') DEFAULT 'Em processamento',
+    Data_conclusão DATE NOt NULL,
+    Número VARCHAR(45) NOT NULL,
+    CONSTRAINT fk_veículos_os FOREIGN KEY (Veículos_idVeículos) REFERENCES veículos(idVeículos),
+    CONSTRAINT fk_clientes_os FOREIGN KEY (Veículos_idClientes) REFERENCES clientes(idClientes)
+);
+
+CREATE TABLE peças (
+	idPeças INT AUTO_INCREMENT PRIMARY KEY,
+    Descrição VARCHAR(45),
+    Valor FLOAT
+);
+
+CREATE TABLE Serviços (
+	idServiços INT AUTO_INCREMENT PRIMARY KEY,
+    Descrição VARCHAR(255),
+    Valor_mão_obra FLOAT
+);
+
+CREATE TABLE Mecânico (
+	idMecânico INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(45),
+    Último_nome VARCHAR(45),
+	Especialidade VARCHAR(45),
+    Código VARCHAR(45),
+    Endereço VARCHAR(45)
+);
+
+CREATE TABLE ordem_de_serviço_OS_das_peças (
+	Peças_idPeças INT,
+    OS_idOrdem_de_Serviço_OS INT,
+    OS_Veículos_idVeículos INT,
+    OS_Veículos_idClientes INT,
+    PRIMARY KEY (Peças_idPeças, OS_idOrdem_de_Serviço_OS, OS_Veículos_idVeículos, OS_Veículos_idClientes),
+    Quantidade_peças INT
+);
+
+CREATE TABLE ordem_de_serviço_OS_dos_serviços (
+	Serviços_idServiços INT,
+    OSS_idOrdem_de_Serviço_OS INT,
+    OSS_Veículos_idVeículos INT,
+    OSS_Veículos_idClientes INT,
+    PRIMARY KEY (Serviços_idServiços, OSS_idOrdem_de_Serviço_OS, OSS_Veículos_idVeículos, OSS_Veículos_idClientes),
+    Quantidade_serviços INT
+);
+    
+CREATE TABLE Ordem_de_serviço_OS_dos_mecãnicos (
+	Mecânico_idMecãnico INT,
+    OSM_idOrdem_de_Serviço_OS INT,
+    OSM_Veículos_idVeículos INT,
+    OSM_Veículos_idClientes INT,
+    PRIMARY KEY (Mecânico_idMecãnico, OSM_idOrdem_de_Serviço_OS, OSM_Veículos_idVeículos, OSM_Veículos_idClientes),
+    Quantidade_mecânicos INT
+);
+    

@@ -1,0 +1,121 @@
+USE MM_oficina_mecânica;
+
+INSERT INTO clientes (Nome, Nome_meio, Último_nome, Endereço, Contato) VALUES
+('João', 'Pedro', 'Silva', 'Rua A, 123', '11987654321'),
+('Maria', 'Clara', 'Souza', 'Rua B, 456', '11912345678'),
+('Carlos', 'Alberto', 'Lima', 'Rua C, 789', '21987654321'),
+('Ana', 'Beatriz', 'Oliveira', 'Rua D, 101', '31987654321'),
+('Paulo', 'Henrique', 'Santos', 'Rua E, 112', '41987654321'),
+('Fernanda', 'Martins', 'Costa', 'Rua F, 123', '51987654321'),
+('Ricardo', 'José', 'Barbosa', 'Rua G, 234', '61987654321'),
+('Beatriz', 'Fernandes', 'Melo', 'Rua H, 345', '71987654321'),
+('Mariana', 'Lopes', 'Pereira', 'Rua I, 456', '81987654321'),
+('Gabriel', 'Alves', 'Nascimento', 'Rua J, 567', '91987654321');
+
+INSERT INTO veículos (Clientes_idClientes, Placa, Modelo, Ano) VALUES
+(1, 'ABC1234', 'Corolla', '2020-01-01'),
+(2, 'DEF5678', 'Civic', '2021-05-15'),
+(3, 'GHI9012', 'Hilux', '2019-09-09'),
+(4, 'JKL3456', 'Onix', '2022-03-03'),
+(5, 'MNO7890', 'HB20', '2018-07-07'),
+(6, 'PQR1234', 'Cruze', '2020-11-11'),
+(7, 'STU5678', 'Ranger', '2021-06-06'),
+(8, 'VWX9012', 'EcoSport', '2017-02-02'),
+(9, 'YZA3456', 'Fusion', '2019-12-12'),
+(10, 'BCD7890', 'Kwid', '2022-08-08');
+
+INSERT INTO ordem_de_serviço_OS (Veículos_idVeículos, Veículos_idClientes, Data_emissão, Valor_total, Status_serviço, Data_conclusão, Número) VALUES
+(1, 1, '2024-01-01', 250.00, 'Serviço concluído', '2024-01-03', 'OS001'),
+(2, 2, '2024-01-02', 400.00, 'Em andamento', '2024-01-05', 'OS002'),
+(3, 3, '2024-01-03', 350.00, 'Em processamento', '2024-01-06', 'OS003'),
+(4, 4, '2024-01-04', 150.00, 'Serviço concluído', '2024-01-07', 'OS004'),
+(5, 5, '2024-01-05', 500.00, 'Em andamento', '2024-01-08', 'OS005'),
+(6, 6, '2024-01-06', 300.00, 'Em processamento', '2024-01-09', 'OS006'),
+(7, 7, '2024-01-07', 450.00, 'Serviço concluído', '2024-01-10', 'OS007'),
+(8, 8, '2024-01-08', 200.00, 'Em andamento', '2024-01-11', 'OS008'),
+(9, 9, '2024-01-09', 100.00, 'Em processamento', '2024-01-12', 'OS009'),
+(10, 10, '2024-01-10', 600.00, 'Serviço concluído', '2024-01-13', 'OS010');
+
+INSERT INTO peças (Descrição, Valor) VALUES
+('Filtro de ar', 50.00),
+('Óleo lubrificante', 100.00),
+('Pneus', 400.00),
+('Bateria', 300.00),
+('Pastilhas de freio', 150.00),
+('Correia dentada', 200.00),
+('Velas de ignição', 75.00),
+('Amortecedores', 600.00),
+('Filtro de óleo', 80.00),
+('Radiador', 500.00);
+
+INSERT INTO Serviços (Descrição, Valor_mão_obra) VALUES
+('Troca de óleo', 100.00),
+('Alinhamento e balanceamento', 150.00),
+('Revisão geral', 300.00),
+('Troca de pastilhas de freio', 120.00),
+('Substituição de amortecedores', 400.00),
+('Conserto de ar-condicionado', 250.00),
+('Troca de correia dentada', 350.00),
+('Instalação de bateria', 200.00),
+('Troca de velas', 90.00),
+('Troca de pneus', 180.00);
+
+INSERT INTO Mecânico (Nome, Último_nome, Especialidade, Código, Endereço) VALUES
+('Lucas', 'Silva', 'Suspensão', 'ME001', 'Rua K, 890'),
+('Roberto', 'Oliveira', 'Freios', 'ME002', 'Rua L, 901'),
+('Fernanda', 'Lima', 'Motor', 'ME003', 'Rua M, 902'),
+('Carlos', 'Santos', 'Transmissão', 'ME004', 'Rua N, 903'),
+('Mariana', 'Costa', 'Elétrica', 'ME005', 'Rua O, 904'),
+('João', 'Pereira', 'Pneus', 'ME006', 'Rua P, 905'),
+('Ana', 'Barbosa', 'Lataria', 'ME007', 'Rua Q, 906'),
+('Gustavo', 'Melo', 'Diagnóstico', 'ME008', 'Rua R, 907'),
+('Clara', 'Fernandes', 'Troca de óleo', 'ME009', 'Rua S, 908'),
+('Pedro', 'Alves', 'Revisão', 'ME010', 'Rua T, 909');
+
+
+INSERT INTO Ordem_de_serviço_OS_dos_mecãnicos 
+(Mecânico_idMecãnico, OSM_idOrdem_de_Serviço_OS, OSM_Veículos_idVeículos, OSM_Veículos_idClientes, Quantidade_mecânicos) 
+VALUES
+(1, 301, 3001, 7001, 1),
+(2, 302, 3002, 7002, 1),
+(3, 303, 3003, 7003, 2),
+(4, 304, 3004, 7004, 3),
+(5, 305, 3005, 7005, 2),
+(6, 306, 3006, 7006, 4),
+(7, 307, 3007, 7007, 1),
+(8, 308, 3008, 7008, 3),
+(9, 309, 3009, 7009, 2),
+(10, 310, 3010, 7010, 5);
+
+INSERT INTO ordem_de_serviço_OS_das_peças 
+(Peças_idPeças, OS_idOrdem_de_Serviço_OS, OS_Veículos_idVeículos, OS_Veículos_idClientes, Quantidade_peças) 
+VALUES
+(1, 101, 1001, 5001, 4),
+(2, 102, 1002, 5002, 2),
+(3, 103, 1003, 5003, 5),
+(4, 104, 1004, 5004, 1),
+(5, 105, 1005, 5005, 3),
+(6, 106, 1006, 5006, 6),
+(7, 107, 1007, 5007, 7),
+(8, 108, 1008, 5008, 2),
+(9, 109, 1009, 5009, 8),
+(10, 110, 1010, 5010, 10);
+
+INSERT INTO ordem_de_serviço_OS_dos_serviços 
+(Serviços_idServiços, OSS_idOrdem_de_Serviço_OS, OSS_Veículos_idVeículos, OSS_Veículos_idClientes, Quantidade_serviços) 
+VALUES
+(1, 201, 2001, 6001, 1),
+(2, 202, 2002, 6002, 2),
+(3, 203, 2003, 6003, 3),
+(4, 204, 2004, 6004, 4),
+(5, 205, 2005, 6005, 2),
+(6, 206, 2006, 6006, 1),
+(7, 207, 2007, 6007, 5),
+(8, 208, 2008, 6008, 6),
+(9, 209, 2009, 6009, 7),
+(10, 210, 2010, 6010, 3);
+
+
+
+
+

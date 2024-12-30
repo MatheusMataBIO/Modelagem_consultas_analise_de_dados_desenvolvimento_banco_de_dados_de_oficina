@@ -1,0 +1,40 @@
+USE MM_oficina_mecânica;
+
+-- Contagem de ordem de serviço por status 
+
+SELECT Status_serviço, COUNT(idOrdem_de_Serviço_OS_) AS Total_OS
+	FROM ordem_de_serviço_OS
+	GROUP BY Status_serviço;
+    
+-- Receita total por cliente (considerando serviços e peças)
+
+SELECT c.Nome AS Cliente, SUM(o.Valor_total) AS Receita_Total
+	FROM ordem_de_serviço_OS o
+	JOIN clientes c ON o.Veículos_idClientes = c.idClientes
+	GROUP BY c.Nome
+    ORDER BY Receita_Total DESC;
+
+-- Número de serviços realizados por mecânico
+
+SELECT m.Nome AS Mecânico,COUNT(osm.OSM_idOrdem_de_Serviço_OS) AS Total_Serviços
+	FROM Ordem_de_serviço_OS_dos_mecãnicos osm
+	JOIN Mecânico m ON osm.Mecânico_idMecãnico = m.idMecânico
+    GROUP BY m.Nome
+    ORDER BY Total_Serviços DESC;
+    
+-- Peças mais utilizadas nas ordens de serviço
+
+SELECT  p.Descrição AS Peça, SUM(osp.Quantidade_peças) AS Quantidade_Total
+	FROM ordem_de_serviço_OS_das_peças osp
+    JOIN peças p ON osp.Peças_idPeças = p.idPeças
+    GROUP BY p.Descrição
+    ORDER BY Quantidade_Total DESC;
+
+-- Análise do custo médio de serviços por cliente
+
+SELECT c.Nome AS Cliente, AVG(o.Valor_total) AS Custo_Médio
+	FROM ordem_de_serviço_OS o
+    JOIN clientes c ON o.Veículos_idClientes = c.idClientes
+    GROUP BY c.Nome
+    HAVING Custo_Médio > 200
+    ORDER BY Custo_Médio DESC;
